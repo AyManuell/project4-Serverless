@@ -47,12 +47,12 @@ provider:
 
 functions:
 
-  hello: 
+  hello:
     handler: handler.hello
     events:
-      -httpApi:
-        path: /
-        method: get
+      - httpApi:
+          method: get
+          path: /
 
   # Auth:  
   #   handler: src/lambda/auth/auth0Authorizer.handler
