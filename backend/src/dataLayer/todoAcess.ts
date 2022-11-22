@@ -1,9 +1,9 @@
 import * as AWS from 'aws-sdk'
-import * as AWSXRay from 'aws-xray-sdk'
+const AWSXRay = require ('aws-xray-sdk')
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { createLogger } from '../utils/logger'
 import { TodoItem } from '../models/TodoItem'
-//import { TodoUpdate } from '../models/TodoUpdate';
+//  import { TodoUpdate } from '../models/TodoUpdate';
 
 const XAWS = AWSXRay.captureAWS(AWS)
 
@@ -46,7 +46,7 @@ export class TodosAccess {
 
         logger.info('---Created Todo Item---', outcome)
 
-        return todoItem
+        return todoItem as TodoItem
     }
 
     

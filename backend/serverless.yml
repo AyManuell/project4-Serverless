@@ -87,7 +87,7 @@ functions:
         - Effect: Allow
           Action: 
             - dynamodb:PutItem
-          Resource: arn:aws:dynamodb:${self:provide.region}:*:table/${self:provider.environment.TODOS_TABLE}        
+          Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}        
         - Effect: Allow
           Action: 
             - xray:PutTraceSegments
@@ -133,9 +133,9 @@ resources:
        Type: AWS::ApiGateway::GatewayResponse
        Properties:
         ResponseParameters:
-          gatewayrespnse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayrespnse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
-          gatewayrespnse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST,DELETE,PATCH,PUT'"
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST,DELETE,PATCH,PUT'"
         ResponseType: DEFAULT_4XX
         RestApiId:
           Ref: 'ApiGatewayRestApi'
@@ -144,9 +144,9 @@ resources:
        Type: AWS::ApiGateway::GatewayResponse
        Properties:
         ResponseParameters:
-          gatewayrespnse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayrespnse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
-          gatewayrespnse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST,DELETE,PATCH,PUT'"
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST,DELETE,PATCH,PUT'"
         ResponseType: DEFAULT_5XX
         RestApiId:
           Ref: 'ApiGatewayRestApi'
@@ -217,5 +217,5 @@ resources:
               Effect: Allow
               Principal: '*'
               Action: 's3:GetObject'
-              Resource: 'arn:aws:s3:::${self:provider.environment.ATTACHEMENT_S3_BUCKET}/*'
+              Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*
         Bucket: !Ref AttachmentsBucket
