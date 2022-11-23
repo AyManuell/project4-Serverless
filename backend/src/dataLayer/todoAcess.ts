@@ -56,7 +56,21 @@ export class TodosAccess {
         userId: string,
         todoUpdate: TodoUpdate
         ):Promise<TodoUpdate>{
-            logger.info('-------UpdateTo function called-----')
+            logger.info('-------UpdateTo function called------')
+
+            /**
+             * Create an update expression that adds todoUpdate poperties if they exist
+             */
+            const updateExpression = 'set ' + Object.keys(todoUpdate).map(key => `#${key} = :${key}`).join(', ')
+            const expressionAttributeNames = Object.keys(todoUpdate).reduce((acc, currkey) => {
+                acc[`#${currkey}`] = currkey
+                return acc;
+            }, {})
+            const expressionAttributeValues = Object.keys(todoUpdate).reduce((acc, currkey) => {
+                acc[`:${currkey}`] = todoUpdate[currkey]
+                return acc;
+            }, {})
+
 
             const outcome = await this.docClient.update({
                 TableName: this.todosTable,
@@ -64,15 +78,9 @@ export class TodosAccess {
                     todoId,
                     userId
                 },
-                UpdateExpression: 'set #name = :name , dueDate = :dueDate, done = :done',
-                ExpressionAttributeNames: {
-                    '#name': 'name'
-                },
-                ExpressionAttributeValues: {
-                    ':name': todoUpdate.name,
-                    ':dueDate': todoUpdate.dueDate,
-                    ':done': todoUpdate.done
-                },
+                UpdateExpression: updateExpression,
+                ExpressionAttributeNames: expressionAttributeNames,
+                ExpressionAttributeValues: expressionAttributeValues,
                 ReturnValues: 'ALL_NEW'
             })
             .promise()
