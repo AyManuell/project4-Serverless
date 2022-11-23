@@ -14,7 +14,13 @@ const logger = createLogger('TodosAccess');
 const attachmentUtils = new AttachmentUtils();
 const todosAccess = new TodosAccess()
 
+//GetTodos Func
 
+export async function getTodosForUser(userId: string): Promise<TodoItem[]> {
+    logger.info('----Calling Get to do function for you----')
+    return todosAccess.getAllTodos(userId)
+
+}
 
 // CreateTodo Func
 export async function createTodo(newTodo: CreateTodoRequest, userId: string): Promise<TodoItem>
