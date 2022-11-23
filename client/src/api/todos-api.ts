@@ -68,6 +68,17 @@ export async function getUploadUrl(
   return response.data.uploadUrl
 }
 
-export async function uploadFile(uploadUrl: string, file: Buffer): Promise<void> {
-  await Axios.put(uploadUrl, file)
+export async function uploadFile(uploadUrl: string, file: Buffer, idToken?: string, todoId?: string): Promise<void> {
+  const response = await Axios.put(uploadUrl, file)
+
+  const imageUrl = response.config.url?.split('?')[0]
+
+  if(todoId && idToken && imageUrl) {
+    await Axios.patch(`${apiEndpoint}/todos/${todoId}`, JSON.stringify({ attachmentUrl: imageUrl }), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
+      }
+    })
+  }
 }
