@@ -33,5 +33,5 @@ export async function createTodo(newTodo: CreateTodoRequest, userId: string): Pr
         ...newTodo
     }
  
-    return await todosAccess.createTodoItem(newItem )
+    return await todosAccess.createTodoItem(newItem)
 }

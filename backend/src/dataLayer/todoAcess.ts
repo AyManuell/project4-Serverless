@@ -14,7 +14,7 @@ const logger = createLogger('TodosAccess')
 export class TodosAccess {
     constructor(
         private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
-        private readonly todosTable = process.env.TOD0S_TABLE,
+        private readonly todosTable = process.env.TODOS_TABLE,
         private readonly todosIndex = process.env.INDEX_NAME
     ){}
 
